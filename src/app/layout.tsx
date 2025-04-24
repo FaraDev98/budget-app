@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it">
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider>
           <div className="flex min-h-screen">
             {/* Sidebar fissa solo su desktop */}
             <div className="hidden lg:block w-96 fixed left-0 top-0 h-full z-40">
