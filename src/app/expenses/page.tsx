@@ -58,15 +58,30 @@ export default function Expenses() {
       {/* Contenitore per il titolo e i pulsanti */}
       <div className="mb-6 flex flex-col md:flex-row md:justify-between items-center gap-4">
         {/* Barra di ricerca */}
-        <div className="flex gap-4 items-center w-full md:w-auto">
-          <div className="relative w-full md:w-72">
+        <div className="flex gap-4 items-center w-full md:w-auto ">
+          <div className="flex items-center w-full md:w-72">
+            <SearchIcon className="text-gray-500 dark:text-gray-300 w-5 h-5" />
             <Input
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Cerca per descrizione o categoria"
-              className="p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white w-full pl-10"
+              placeholder="Cerca spesa..."
+              type="text"
+              className="w-full
+                        bg-transparent
+                        border-0
+                        border-b-2
+                        border-b-blue-500
+                        dark:border-b-blue-300
+                        text-gray-800
+                        dark:text-white
+                        placeholder-gray-500
+                        dark:placeholder-gray-400
+                        focus:outline-none
+                        focus:ring-0
+                        focus:border-b-blue-700
+                        dark:focus:border-b-blue-400
+                        p-2"
             />
-            <SearchIcon className="absolute left-3 top-3 text-gray-500 dark:text-gray-300 w-5 h-5" />
           </div>
           {/* Pulsante per aggiungere spesa */}
           <Button
