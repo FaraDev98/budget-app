@@ -1,7 +1,7 @@
 // src/app/dashboard/page.tsx
 'use client';
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,18 +12,26 @@ import Navbar from "@/components/navbar";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA336A", "#4B0082"];
 
 export default function Dashboard() {
-  const [expenses, setExpenses] = useState([{ "description": "Spesa 1", "amount": 50, "category": "Alimentari" }, { "description": "Spesa 2", "amount": 30, "category": "Trasporti" }]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [expenses, setExpenses] = useState<any>([]);
   const [income, setIncome] = useState("");
 
-  const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const totalExpenses = expenses.reduce((sum: any, exp: { amount: any; }) => sum + exp.amount, 0);
   const residual = parseFloat(income || "0") - totalExpenses;
 
   const categoryData = Object.entries(
-    expenses.reduce((acc, curr) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expenses.reduce((acc: { [x: string]: any; }, curr: { category: string | number; amount: any; }) => {
       acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
       return acc;
     }, {})
   ).map(([key, value]) => ({ name: key, value }));
+
+useEffect(() => {
+  setExpenses([{ "description": "Spesa 1", "amount": 50, "category": "Alimentari" }, { "description": "Spesa 2", "amount": 30, "category": "Trasporti" }]);
+}
+, []);
 
   return (
     <div className="p-4">

@@ -32,7 +32,7 @@ export default function Expenses() {
   });
 
   // Ordinamento delle spese per data (dal più recente al più vecchio)
-  const sortedExpenses = filteredExpenses.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const sortedExpenses = filteredExpenses.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
   // Gestione aggiunta spesa
   const [description, setDescription] = useState("");
