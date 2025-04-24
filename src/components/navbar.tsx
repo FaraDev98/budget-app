@@ -119,7 +119,7 @@ export default function Navbar() {
                 </Link>
               </nav>
 
-              <div className="absolute bottom-6 right-6">
+              <div className="text-right mt-auto">
                 <button
                   onClick={toggleTheme}
                   className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
@@ -128,7 +128,7 @@ export default function Navbar() {
                     <MoonIcon className="w-5 h-5 text-gray-800" />
                   ) : (
                     <SunIcon className="w-5 h-5 text-yellow-300" />
-                    
+
                   )}
                 </button>
               </div>
