@@ -35,9 +35,9 @@ useEffect(() => {
 
   return (
     <div className="p-4">
-      <div className="">
+      <div>
         <Navbar />
-
+      </div>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
           <Card className="h-full">
@@ -70,6 +70,5 @@ useEffect(() => {
 
         </motion.div>
       </div>
-    </div>
   );
 }

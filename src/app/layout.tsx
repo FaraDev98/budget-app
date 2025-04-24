@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/context/theme-provider";
+import { SelectedMonthProvider } from "@/context/month-provider";
 import Sidebar from "@/components/sidebar";
 
 export const metadata: Metadata = {
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="it">
       <body>
         <ThemeProvider>
+          <SelectedMonthProvider>
           <div className="flex min-h-screen">
             {/* Sidebar fissa solo su desktop */}
             <div className="hidden lg:block w-96 fixed left-0 top-0 h-full z-40">
@@ -24,6 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {children}
             </div>
           </div>
+          </SelectedMonthProvider>
         </ThemeProvider>
       </body>
     </html>
