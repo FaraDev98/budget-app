@@ -3,6 +3,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/theme-provider";
 import { SelectedMonthProvider } from "@/context/month-provider";
 import Sidebar from "@/components/sidebar";
+import { AuthProvider } from "@/context/auth-provider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -13,21 +14,23 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="it">
       <body>
-        <ThemeProvider>
-          <SelectedMonthProvider>
-          <div className="flex min-h-screen">
-            {/* Sidebar fissa solo su desktop */}
-            <div className="hidden lg:block w-96 fixed left-0 top-0 h-full z-40">
-              <Sidebar alwaysVisible />
-            </div>
+        <AuthProvider>
+          <ThemeProvider>
+            <SelectedMonthProvider>
+              <div className="flex min-h-screen">
+                {/* Sidebar fissa solo su desktop */}
+                <div className="hidden lg:block w-96 fixed left-0 top-0 h-full z-40">
+                  <Sidebar alwaysVisible />
+                </div>
 
-            {/* Contenuto principale */}
-            <div className="flex-1 lg:ml-96">
-              {children}
-            </div>
-          </div>
-          </SelectedMonthProvider>
-        </ThemeProvider>
+                {/* Contenuto principale */}
+                <div className="flex-1 lg:ml-96">
+                  {children}
+                </div>
+              </div>
+            </SelectedMonthProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

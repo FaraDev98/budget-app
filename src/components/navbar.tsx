@@ -2,10 +2,12 @@ import { CalendarIcon } from '@heroicons/react/24/outline';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTheme } from '@/context/theme-provider';
-import { MenuIcon, MoonIcon, SunIcon, XIcon } from 'lucide-react';
+import { LogOutIcon, MenuIcon, MoonIcon, SunIcon, XIcon } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import MonthYearSelector from './MonthYearSelector';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -119,19 +121,22 @@ export default function Navbar() {
                 </Link>
               </nav>
 
-              <div className="text-right mt-auto">
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
-                >
-                  {theme === 'light' ? (
-                    <MoonIcon className="w-5 h-5 text-gray-800" />
-                  ) : (
-                    <SunIcon className="w-5 h-5 text-yellow-300" />
-
-                  )}
-                </button>
-              </div>
+              <div className="mt-auto flex items-center justify-between">
+            <button
+              onClick={() => {signOut(auth)}}  
+              className="p-2 rounded-md bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition flex gap-2"  // Placeholder for logout function                      
+            ><div>Logout</div><LogOutIcon></LogOutIcon></button>
+            <button
+              onClick={toggleTheme}
+              className="p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition"
+            >
+              {theme === 'light' ? (
+                <MoonIcon className="w-5 h-5 text-gray-800" />
+              ) : (
+                <SunIcon className="w-5 h-5 text-yellow-300" />
+              )}
+            </button>
+          </div>
             </motion.div>
           </>
         )}

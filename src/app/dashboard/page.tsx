@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { motion } from "framer-motion";
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import Navbar from "@/components/navbar";
+import ProtectedRoute from "@/components/protected-route";
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA336A", "#4B0082"];
 
@@ -28,19 +29,22 @@ export default function Dashboard() {
     }, {})
   ).map(([key, value]) => ({ name: key, value }));
 
-useEffect(() => {
-  setExpenses([{ "description": "Spesa 1", "amount": 50, "category": "Alimentari" }, { "description": "Spesa 2", "amount": 30, "category": "Trasporti" }]);
-}
-, []);
+  useEffect(() => {
+    setExpenses([{ "description": "Spesa 1", "amount": 50, "category": "Alimentari" }, { "description": "Spesa 2", "amount": 30, "category": "Trasporti" }]);
+  }
+    , []);
 
   return (
-    <div className="p-4">
-      <div>
-        <Navbar />
-      </div>
+    <>
+      <ProtectedRoute>
+
+      <div className="p-4">
+        <div>
+          <Navbar />
+        </div>
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
-          <Card className="h-full">
+            <Card className="h-full">
               <CardContent className="space-y-2 h-full flex flex-col">
                 <Label>Stipendio Ricevuto (€)</Label>
                 <Input type="number" value={income} onChange={(e) => setIncome(e.target.value)} placeholder="Es. 1500" />
@@ -48,27 +52,29 @@ useEffect(() => {
                 <p>Residuo: <strong className={residual >= 0 ? 'text-green-600' : 'text-red-600'}>€ {residual.toFixed(2)}</strong></p>
               </CardContent>
             </Card>
-          <Card className="h-full">
-            <CardContent className="h-full">
-              <h2 className="text-xl font-semibold mb-2">Spese per Categoria</h2>
-              <div className="h-64">
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
-                      {categoryData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
-              </div>
-            </CardContent>
-          </Card>
+            <Card className="h-full">
+              <CardContent className="h-full">
+                <h2 className="text-xl font-semibold mb-2">Spese per Categoria</h2>
+                <div className="h-64">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie data={categoryData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={80} label>
+                        {categoryData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      <Legend />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </CardContent>
+            </Card>
           </div>
 
         </motion.div>
       </div>
+      </ProtectedRoute>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";// Importa l'icona Heroicon
 import { SearchIcon } from "lucide-react";
+import ProtectedRoute from "@/components/protected-route";
 
 export default function Expenses() {
   const [expenses, setExpenses] = useState([
@@ -52,21 +53,22 @@ export default function Expenses() {
   };
 
   return (
-    <div className="p-4 min-h-screen bg-background text-foreground relative">
-      <Navbar />
+    <ProtectedRoute>
+      <div className="p-4 min-h-screen bg-background text-foreground relative">
+        <Navbar />
 
-      {/* Contenitore per il titolo e i pulsanti */}
-      <div className="mb-6 flex flex-col md:flex-row md:justify-between items-center gap-4">
-        {/* Barra di ricerca */}
-        <div className="flex gap-4 items-center w-full md:w-auto ">
-          <div className="flex items-center w-full md:w-72">
-            <SearchIcon className="text-gray-500 dark:text-gray-300 w-5 h-5" />
-            <Input
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Cerca spesa..."
-              type="text"
-              className="w-full
+        {/* Contenitore per il titolo e i pulsanti */}
+        <div className="mb-6 flex flex-col md:flex-row md:justify-between items-center gap-4">
+          {/* Barra di ricerca */}
+          <div className="flex gap-4 items-center w-full md:w-auto ">
+            <div className="flex items-center w-full md:w-72">
+              <SearchIcon className="text-gray-500 dark:text-gray-300 w-5 h-5" />
+              <Input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Cerca spesa..."
+                type="text"
+                className="w-full
                         bg-transparent
                         border-0
                         border-b-2
@@ -81,90 +83,91 @@ export default function Expenses() {
                         focus:border-b-blue-700
                         dark:focus:border-b-blue-400
                         p-2"
-            />
-          </div>
-          {/* Pulsante per aggiungere spesa */}
-          <Button
-            onClick={() => setSidebarOpen(true)}
-            className="bg-blue-600 text-white hover:bg-blue-700"
-          >
-            Aggiungi Spesa
-          </Button>
-        </div>
-      </div>
-
-      {/* Sidebar per aggiungere spesa */}
-      {sidebarOpen && (
-        <div className="fixed top-0 left-0 z-50 w-full h-full bg-black/50" onClick={() => setSidebarOpen(false)} />
-      )}
-      <div
-        className={`fixed top-0 right-0 h-full w-96 bg-white dark:bg-gray-800 shadow-lg p-6 z-50 transform ${sidebarOpen ? "translate-x-0" : "translate-x-full"} transition-transform ease-in-out duration-300 rounded-l-2xl`}
-      >
-        <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Aggiungi Spesa</h2>
-        <div className="space-y-4">
-          <div>
-            <Label>Descrizione</Label>
-            <Input
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Es. Spesa supermercato"
-              className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
-            />
-          </div>
-          <div>
-            <Label>Importo (€)</Label>
-            <Input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              placeholder="Es. 45.90"
-              className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
-            />
-          </div>
-          <div>
-            <Label>Categoria</Label>
-            <Input
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              placeholder="Es. Alimentari"
-              className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
-            />
-          </div>
-          <div>
-            <Label>Data</Label>
-            <Input
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-              className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
-            />
-          </div>
-          <Button
-            className="w-full mt-4 bg-green-600 text-white hover:bg-green-700"
-            onClick={addExpense}
-          >
-            Aggiungi Spesa
-          </Button>
-        </div>
-      </div>
-
-      {/* Contenitore principale per le spese con scroll */}
-      <div className="overflow-y-auto max-h-[calc(100vh-250px)] mt-8">
-        {/* Visualizzazione delle spese ordinate */}
-        <div className="space-y-6">
-          {sortedExpenses.map((expense, index) => (
-            <div
-              key={index}
-              className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
-            >
-              <h3 className="font-semibold text-lg text-gray-800 dark:text-white">{expense.description}</h3>
-              <p className="text-green-600 dark:text-green-400 font-semibold">€ {expense.amount.toFixed(2)}</p>
-              <p className="text-gray-500 dark:text-gray-300">{expense.category}</p>
-              <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">{expense.date}</p> {/* Data aggiunta alla card */}
+              />
             </div>
-          ))}
+            {/* Pulsante per aggiungere spesa */}
+            <Button
+              onClick={() => setSidebarOpen(true)}
+              className="bg-blue-600 text-white hover:bg-blue-700"
+            >
+              Aggiungi Spesa
+            </Button>
+          </div>
+        </div>
+
+        {/* Sidebar per aggiungere spesa */}
+        {sidebarOpen && (
+          <div className="fixed top-0 left-0 z-50 w-full h-full bg-black/50" onClick={() => setSidebarOpen(false)} />
+        )}
+        <div
+          className={`fixed top-0 right-0 h-full w-96 bg-white dark:bg-gray-800 shadow-lg p-6 z-50 transform ${sidebarOpen ? "translate-x-0" : "translate-x-full"} transition-transform ease-in-out duration-300 rounded-l-2xl`}
+        >
+          <h2 className="text-2xl font-semibold mb-6 text-gray-800 dark:text-white">Aggiungi Spesa</h2>
+          <div className="space-y-4">
+            <div>
+              <Label>Descrizione</Label>
+              <Input
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Es. Spesa supermercato"
+                className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
+              />
+            </div>
+            <div>
+              <Label>Importo (€)</Label>
+              <Input
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                placeholder="Es. 45.90"
+                className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
+              />
+            </div>
+            <div>
+              <Label>Categoria</Label>
+              <Input
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                placeholder="Es. Alimentari"
+                className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
+              />
+            </div>
+            <div>
+              <Label>Data</Label>
+              <Input
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                className="mt-2 p-3 rounded-lg shadow-md bg-gray-100 dark:bg-gray-700 border-2 dark:border-gray-600 text-gray-800 dark:text-white"
+              />
+            </div>
+            <Button
+              className="w-full mt-4 bg-green-600 text-white hover:bg-green-700"
+              onClick={addExpense}
+            >
+              Aggiungi Spesa
+            </Button>
+          </div>
+        </div>
+
+        {/* Contenitore principale per le spese con scroll */}
+        <div className="overflow-y-auto max-h-[calc(100vh-250px)] mt-8">
+          {/* Visualizzazione delle spese ordinate */}
+          <div className="space-y-6">
+            {sortedExpenses.map((expense, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition"
+              >
+                <h3 className="font-semibold text-lg text-gray-800 dark:text-white">{expense.description}</h3>
+                <p className="text-green-600 dark:text-green-400 font-semibold">€ {expense.amount.toFixed(2)}</p>
+                <p className="text-gray-500 dark:text-gray-300">{expense.category}</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">{expense.date}</p> {/* Data aggiunta alla card */}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
