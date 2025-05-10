@@ -1,3 +1,4 @@
+'use client';
 import { CalendarIcon } from '@heroicons/react/24/outline';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
