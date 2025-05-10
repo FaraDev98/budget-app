@@ -5,6 +5,9 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'fire
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
 import { Loader2 } from 'lucide-react';
+import Image from 'next/image';
+import { useTheme } from '@/context/theme-provider';
+import { motion } from 'framer-motion';
 
 export default function AuthForm() {
   const [email, setEmail] = useState('');
@@ -13,6 +16,7 @@ export default function AuthForm() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,6 +40,25 @@ export default function AuthForm() {
 
   return (
     <div className='flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-900 p-4'>
+      <motion.div
+        className="bg-transparent"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <Image
+          src={
+            theme === 'dark'
+              ? '/login-illustration-dark_bg_removed.png'
+              : '/login-illustration-light_bg_removed.png'
+          }
+          alt="Illustrazione login"
+          width={260}
+          height={260}
+          className="object-contain"
+          priority
+        />
+      </motion.div>
       <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-white">
         {isLogin ? 'Accedi al tuo account' : 'Crea un nuovo account'}
       </h1>
